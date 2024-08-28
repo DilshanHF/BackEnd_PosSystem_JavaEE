@@ -6,31 +6,33 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-@WebFilter(filterName = "CORSFilter", urlPatterns = "/*")
+@WebFilter(urlPatterns = "/*")
 public class CORSFilter extends HttpFilter {
-
-    Logger logger = LoggerFactory.getLogger(CORSFilter.class);
-
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
+        var origin = req.getHeader("Origin");
+        var configedOrigin = getServletContext().getInitParameter("origin");
 
-        String origin = req.getHeader("Origin");
-        if (origin.contains(getServletContext().getInitParameter("Origin"))){
-            res.setHeader("Access-Control-Allow-Origin", origin);
-            res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, HEADER");
+        if ("OPTIONS".equalsIgnoreCase(req.getMethod())) {
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
             res.setHeader("Access-Control-Allow-Headers", "Content-Type");
             res.setHeader("Access-Control-Expose-Headers", "Content-Type");
-
-            logger.info("Allow access to " + origin + " origin");
-            chain.doFilter(req, res);
-        }else{
-            logger.error("Access denied for " + origin + " origin");
-            res.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            res.setStatus(HttpServletResponse.SC_OK);
+            return;
         }
+
+
+        if (origin != null && configedOrigin != null && origin.contains(configedOrigin)) {
+            res.setHeader("Access-Control-Allow-Origin", origin);
+            res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
+            res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+            res.setHeader("Access-Control-Expose-Headers", "Content-Type");
+        }
+
+        chain.doFilter(req, res);
     }
 }
