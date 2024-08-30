@@ -14,5 +14,5 @@ create table item(
     id varchar(255) primary key ,
     description varchar(255) not null ,
     unitPrice decimal(10,2) not null ,
-    qty varchar(255)not null
+    qty int(255)not null
 )

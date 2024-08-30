@@ -1,6 +1,7 @@
 package ijse.lk.backend_possystem_javaee.dao;
 
 import ijse.lk.backend_possystem_javaee.dao.custom.impl.CustomerDAOImpl;
+import ijse.lk.backend_possystem_javaee.dao.custom.impl.ItemDAOImpl;
 
 public class DAOFactory {
 
@@ -20,8 +21,8 @@ public class DAOFactory {
         switch (daoType){
             case CUSTOMER:
                 return new CustomerDAOImpl();
-//            case ITEM:
-//                return new ItemDAOImpl();
+            case ITEM:
+                return new ItemDAOImpl();
 //            case ORDER:
 //                return new OrderDAOImpl();
 //            case ORDER_DETAILS:
