@@ -11,9 +11,9 @@ import java.util.List;
 public class CustomerDAOImpl implements CustomerDAO {
 
     private static final String GET_QUERY = "SELECT * FROM customer";
-    private static final String SAVE_QUERY = "INSERT INTO customer(customerId, name, address, contact) VALUES (?,?,?,?)";
-    private static final String UPDATE_QUERY = "UPDATE customer SET name = ?, address = ?, contact = ? WHERE customerId = ?";
-    private static final String DELETE_QUERY = "DELETE FROM customer WHERE customerId = ?";
+    private static final String SAVE_QUERY = "INSERT INTO customer(id, name, address, contact) VALUES (?,?,?,?)";
+    private static final String UPDATE_QUERY = "UPDATE customer SET name = ?, address = ?, contact = ? WHERE id = ?";
+    private static final String DELETE_QUERY = "DELETE FROM customer WHERE id = ?";
 
     @Override
     public List<Customer> getAll(Connection connection) throws SQLException {
@@ -24,7 +24,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     public boolean save(Connection connection, Customer dto) throws SQLException {
         return SQLUtil.execute(connection,
                 SAVE_QUERY,
-                dto.getCustomerId(),
+                dto.getId(),
                 dto.getName(),
                 dto.getAddress(),
                 dto.getContact()
@@ -33,11 +33,17 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public boolean update(Connection connection, Customer dto) throws SQLException {
-        return false;
+        return SQLUtil.execute(connection,
+                UPDATE_QUERY,
+                dto.getName(),
+                dto.getAddress(),
+                dto.getContact(),
+                dto.getId()
+        );
     }
 
     @Override
-    public boolean delete(Connection connection, String s) throws SQLException {
-        return false;
+    public boolean delete(Connection connection, String id) throws SQLException {
+        return SQLUtil.execute(connection,DELETE_QUERY,id);
     }
 }

@@ -19,7 +19,7 @@ public class CustomerBoImpl implements CustomerBO {
     @Override
     public boolean createCustomer(CustomerDto customerDTO, Connection connection) throws SQLException {
        return customerDAO.save(connection,
-               new Customer(customerDTO.getCustomerId(),
+               new Customer(customerDTO.getId(),
                        customerDTO.getName(),
                        customerDTO.getAddress(),
                        customerDTO.getContact()
@@ -29,12 +29,18 @@ public class CustomerBoImpl implements CustomerBO {
 
     @Override
     public boolean updateCustomer(CustomerDto customerDTO, Connection connection) throws SQLException {
-        return false;
+       return customerDAO.update(connection,
+               new Customer(customerDTO.getId(),
+                       customerDTO.getName(),
+                       customerDTO.getAddress(),
+                       customerDTO.getContact()
+               )
+       );
     }
 
     @Override
-    public boolean deleteCustomer(String customerId, Connection connection) throws SQLException {
-        return false;
+    public boolean deleteCustomer(String id, Connection connection) throws SQLException {
+        return customerDAO.delete(connection,id);
     }
 
     @Override

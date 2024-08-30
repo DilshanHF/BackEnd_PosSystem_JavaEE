@@ -1,7 +1,10 @@
 package ijse.lk.backend_possystem_javaee.dto;
 
 
+import jakarta.json.bind.annotation.JsonbProperty;
 import lombok.*;
+
+import java.io.Serializable;
 
 @NoArgsConstructor
 @Data
@@ -10,11 +13,14 @@ import lombok.*;
 @AllArgsConstructor
 @Setter
 
-public class CustomerDto {
-
-    private String customerId;
+public class CustomerDto implements Serializable {
+    @JsonbProperty("id")
+    private String id;
+    @JsonbProperty("name")
     private String name;
+    @JsonbProperty("address")
     private String address;
+    @JsonbProperty("contact")
     private Integer contact;
 
 }
