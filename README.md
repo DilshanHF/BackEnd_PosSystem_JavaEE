@@ -23,7 +23,7 @@ JNDI-based database configuration. AJAX/Fetch API for dynamic content loading. C
 
 ## Set Up & Installation
 
-* Clone the repository: git clone https://github.com/SameeraMS/Pos-System-BackEnd.git
+* Clone the repository: git clone https://github.com/DilshanHF/BackEnd_PosSystem_JavaEE.git
 * Configure the Database: Set up your MySQL database.
 * Update the JNDI configuration in your application server's context file to point to your MySQL database.
 * Build & Deploy: Build the project using your preferred Jakarta EE tool (e.g., Maven). Deploy the application to your Jakarta EE application server (e.g., Tomcat).
